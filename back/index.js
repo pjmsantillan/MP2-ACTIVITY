@@ -195,7 +195,7 @@ app.post('/registration', (req, res)=>{
   const saveStatus = profileDB.push(newRecord);  
    if (saveStatus) {
      res.status(200).json(
-        { code: "success", msg:"registration successful",regUser:saveStatus }   
+        { code: "success", msg:"registration successful"}   
      )
    } else {
      res.status(401).json(
