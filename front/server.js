@@ -12,6 +12,11 @@ app.get('/', (req, res)=>{
 })
 
 
+app.get('/contact-details', (req, res)=>{
+    res.sendFile(__dirname + '/public/contact-details.html');
+})
+
+
 app.get('/add', (req, res)=>{
     res.sendFile(__dirname + '/public/add.html');
 })
@@ -35,7 +40,7 @@ app.get('/about', (req, res)=>{
     res.sendFile(__dirname + '/public/about-us.html');
 })
 
-app.get('/contact', (req, res)=>{
+app.get('/contact-us', (req, res)=>{
     res.sendFile(__dirname + '/public/contact-us.html');
 })
 

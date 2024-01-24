@@ -175,24 +175,27 @@ app.get('/delete-user/:userId', (req, res)=>{
     
 })
  
-app.post('/registration', (req, res)=>{
-    let firstname = req.body.firstname;
-    let lastname = req.body.lastname;
-    let phone = req.body.phone;
-    let address = req.body.address;
+// contact form
+
+const contact_data =[];
+app.get('/all-contacts', (req, res)=>{
+    res.json(contact_data)
+})
+
+app.post('/contact-details', (req, res)=>{
+    let fullname = req.body.fullname;
+    let message = req.body.message;
     let email = req.body.email;
 
-    idCoount = profileDB.length + 1;
+    idCoount = contact_data.length + 1;
     const newRecord = {
         id: idCoount,
-        firstname: firstname,
-        lastname: lastname,
-        phone: phone,
-        address: address,
+        fullname: fullname,
+        message: message,
         email: email,
     }
-    
-  const saveStatus = profileDB.push(newRecord);  
+   
+  const saveStatus = contact_data.push(newRecord);  
    if (saveStatus) {
      res.status(200).json(
         { code: "success", msg:"registration successful"}   
@@ -204,6 +207,39 @@ app.post('/registration', (req, res)=>{
    }
 
 })
+
+
+
+
+// app.post('/registration', (req, res)=>{
+//     let firstname = req.body.firstname;
+//     let lastname = req.body.lastname;
+//     let phone = req.body.phone;
+//     let address = req.body.address;
+//     let email = req.body.email;
+
+//     idCoount = profileDB.length + 1;
+//     const newRecord = {
+//         id: idCoount,
+//         firstname: firstname,
+//         lastname: lastname,
+//         phone: phone,
+//         address: address,
+//         email: email,
+//     }
+    
+//   const saveStatus = profileDB.push(newRecord);  
+//    if (saveStatus) {
+//      res.status(200).json(
+//         { code: "success", msg:"registration successful"}   
+//      )
+//    } else {
+//      res.status(401).json(
+//         { code: "failed", msg:"registration error in saving" }   
+//      )
+//    }
+
+// })
 
 app.post('/login-validation', (req, res)=>{
     let username_login = req.body.username;

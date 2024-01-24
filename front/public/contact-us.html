@@ -18,6 +18,7 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="css/style.css">
   </head>
 
 <body>
@@ -38,62 +39,72 @@
           <a class="nav-link" href="/about">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
+          <a class="nav-link" href="/contact-us">Contact</a>
         </li>
       </ul>
     </div>
   </nav>
   
-  <!-- Header -->
-  <header class="container-fluid text-center mt-5">
-    <h1>Welcome to Your Website</h1>
-    <p>A short description of your website goes here.</p>
-  </header>
-  
-  <!-- Main Content -->
-  <section class="container mt-4">
-    
-    <div class="row">
-      
-        <div class="col-md-10">
-        <h2>Main Content</h2>
-        <p id="main_p_content" ></p>
+  <div class="contact">
+    <div id="container">
+      <h2>Contact</h2>
+      <form >
+        <div class="name">
+          <label for="name"></label>
+          <input type="text" placeholder="Fullname" name="name" id="name_input" required>
+        </div>
+        <div class="email">
+          <label for="email"></label>
+          <input type="email" placeholder="E-mail" name="email" id="email_input" required>
+        </div>
+        <div class="message">
+          <label for="message"></label>
+          <textarea name="message" placeholder="Message" id="message_input" cols="30" rows="5" required></textarea>
+        </div>
+        <div class="submit">
+          <input type="button" value="submit" id="form_button" onclick= "Submit_btn()"/>
+        </div>
+      </form>
     </div>
-
-    <div class="col-md-2">
-        <h2>Side Content</h2>
-        <p>Your side content goes here.</p>
     </div>
     
-  </div>
-  </section>
-  
-  <!-- Footer -->
-  <footer class="container-fluid text-center mt-5">
-    <p>&copy; 2024 Your Website. All Rights Reserved.</p>
-  </footer>
-  
-  <!-- Bootstrap JS and jQuery (required for Bootstrap) -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  
-  
-  <script>
+    <script>
+      function Submit_btn(){
+            const fullname = document.getElementById('name_input').value;
+            const email = document.getElementById('email_input').value;
+            const message = document.getElementById('message_input').value;
+       
+    
+            const data = {
+                fullname: fullname,
+                email: email,
+                message: message,
+            }
+            console.log(data);
 
-async function loadHomePageContent() {
-
-    const result = await fetch('http://localhost:5000/page-content/contact'); //requesting
-    const data = await result.json();
-
-    document.getElementById('main_p_content').innerHTML = data;
-
-}
-
-loadHomePageContent();
-
-
-  </script>
+            fetch('http://localhost:5000/contact-details/', 
+                {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(data => {
+                  
+                  if (data.code=='success') {
+                      console.log('Success:', data);
+                      window.location.href = "http://localhost:3000/contact-details";
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+          
+          }
+            
+    </script>
 
 </body>
 </html>
